@@ -28,7 +28,6 @@ Sorry some stuff is messy! Feel free to contribute :D
 
 ### Usage
 
-    ```
     Usage: thingy --input <FILE> <COMMAND>
 
     Commands:
@@ -41,7 +40,6 @@ Sorry some stuff is messy! Feel free to contribute :D
       -i, --input <FILE>  Path to the exported_docs.json file
       -h, --help          Print help
       -V, --version       Print version
-    ```
 
 ### Examples
 
