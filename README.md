@@ -54,3 +54,9 @@ Sorry some stuff is messy! Feel free to contribute :D
     ```sh
     ./thingy -i path/to/your/exported_docs.json generate -p Action
     ```
+
+- Generate a page and save to a file
+
+    ```sh
+    ./thingy -i path/to/your/exported_docs.json generate -p Action > Action.md
+    ```
