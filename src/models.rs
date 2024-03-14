@@ -43,7 +43,15 @@ pub struct Field {
 
 impl Docs {
     pub fn from_file(path: PathBuf) -> Result<Self, Box<dyn std::error::Error>> {
-        let data = std::fs::read_to_string(path)?;
+        let data = match std::fs::read_to_string(path) {
+            Ok(data) => data,
+            Err(e) => match e.kind() {
+                std::io::ErrorKind::NotFound => {
+                    return Err(format!("File not found: {path}")?.into());
+                }
+                _ => return Err(e.into()),
+            },
+        };
         let docs: Docs = serde_json::from_str(&data)?;
         Ok(docs)
     }
