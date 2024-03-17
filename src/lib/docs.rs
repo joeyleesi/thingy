@@ -100,7 +100,7 @@ impl fmt::Display for Class {
             write!(f, "import TabItem from '@theme/TabItem'")?;
             write!(f, "\n\n")?;
         }
-        write!(f, "{}", self.description)?;
+        write!(f, "{}", self.description.replace("\n", "\n\n"))?;
         write!(f, "\n\n")?;
         write!(f, "## Methods")?;
         for method in &self.methods {
@@ -129,7 +129,7 @@ impl fmt::Display for Method {
         let has_overloads = self.parameters.len() > 1;
         header!(f, "{}()", self.name)?;
         write!(f, "\n\n")?;
-        write!(f, "{}", self.description)?;
+        write!(f, "{}", self.description.replace("\n", "\n\n"))?;
         write!(f, "\n\n")?;
         if has_overloads {
             write!(f, "<Tabs>")?;
@@ -226,7 +226,7 @@ impl fmt::Display for Field {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         header!(f, "{}", self.name)?;
         write!(f, "\n\n")?;
-        write!(f, "{}", self.description)?;
+        write!(f, "{}", self.description.replace("\n", "\n\n"))?;
         write!(f, "\n\n")?;
         write!(f, "---")?;
         Ok(())
