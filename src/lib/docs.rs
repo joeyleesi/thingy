@@ -149,7 +149,7 @@ impl fmt::Display for Method {
             if overload.0.len() > 0 {
                 write!(f, "\n\n")?;
                 let params = Table::new(
-                    "Parameters".to_string(),
+                    "Parameters:".to_string(),
                     parameter_headers.clone(),
                     overload.to_rows(),
                 );
@@ -157,7 +157,7 @@ impl fmt::Display for Method {
             }
             write!(f, "\n\n")?;
             let returns = Table::new(
-                "Returns".to_string(),
+                "Returns:".to_string(),
                 return_headers.clone(),
                 vec![vec![
                     format!(
@@ -169,6 +169,10 @@ impl fmt::Display for Method {
                 ]],
             );
             write!(f, "{}", returns)?;
+            write!(f, "\n\n")?;
+            write!(f, "**Example:**")?;
+            write!(f, "\n\n")?;
+            lua!(f, "--todo")?;
             write!(f, "\n\n")?;
 
             if has_overloads {
