@@ -18,8 +18,8 @@ pub enum Command {
     /// Generate documentation for the given pages
     Generate {
         /// The pages to generate
-        #[arg(short, long, value_delimiter = ',')]
-        pages: Vec<String>,
+        #[arg(short, long)]
+        page: String,
     },
     /// List the possible pages to generate
     Pages,
