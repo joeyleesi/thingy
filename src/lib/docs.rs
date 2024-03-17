@@ -90,6 +90,16 @@ impl Class {
 
 impl fmt::Display for Class {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        if self
+            .methods
+            .iter()
+            .any(|method| method.parameters.len() > 1)
+        {
+            write!(f, "import Tabs from '@theme/Tabs'")?;
+            write!(f, "\n")?;
+            write!(f, "import TabItem from '@theme/TabItem'")?;
+            write!(f, "\n\n")?;
+        }
         write!(f, "{}", self.description)?;
         write!(f, "\n\n")?;
         write!(f, "## Methods")?;
@@ -128,7 +138,11 @@ impl fmt::Display for Method {
         for (i, overload) in self.parameters.iter().enumerate() {
             if has_overloads {
                 write!(f, "{INDENT}")?;
-                write!(f, "<TabItem value=\"overload-{i}\" label=\"Overload {i}\">")?;
+                write!(
+                    f,
+                    "<TabItem value=\"overload-{i}\" label=\"Overload {i}\">",
+                    i = i + 1
+                )?;
                 write!(f, "\n\n")?;
             }
             lua!(f, "{}({})", self.name, overload)?;
