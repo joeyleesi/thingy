@@ -170,11 +170,6 @@ impl fmt::Display for Method {
             );
             write!(f, "{}", returns)?;
             write!(f, "\n\n")?;
-            write!(f, "**Example:**")?;
-            write!(f, "\n\n")?;
-            lua!(f, "--todo")?;
-            write!(f, "\n\n")?;
-
             if has_overloads {
                 write!(f, "{INDENT}")?;
                 write!(f, "</TabItem>")?;
@@ -185,6 +180,10 @@ impl fmt::Display for Method {
             write!(f, "</Tabs>")?;
             write!(f, "\n\n")?;
         }
+        write!(f, "**Example:**")?;
+        write!(f, "\n\n")?;
+        lua!(f, "--todo")?;
+        write!(f, "\n\n")?;
         write!(f, "---")?;
         Ok(())
     }
