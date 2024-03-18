@@ -129,6 +129,16 @@ impl fmt::Display for Method {
         let has_overloads = self.parameters.len() > 1;
         header!(f, "{}()", self.name)?;
         write!(f, "\n\n")?;
+        if self.aliases.len() > 0 {
+            let aliases = self
+                .aliases
+                .iter()
+                .map(|alias| format!("`{}()`", alias))
+                .collect::<Vec<_>>()
+                .join(", ");
+            write!(f, "**Aliases:** {}", aliases)?;
+            write!(f, "\n\n")?;
+        }
         write!(f, "{}", self.description.replace("\n", "\n\n"))?;
         write!(f, "\n\n")?;
         if has_overloads {
