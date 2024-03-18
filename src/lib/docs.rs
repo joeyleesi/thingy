@@ -255,6 +255,10 @@ impl fmt::Display for Field {
         write!(f, "\n\n")?;
         write!(f, "{}", self.description.replace("\n", "\n\n"))?;
         write!(f, "\n\n")?;
+        write!(f, "**Example:**")?;
+        write!(f, "\n\n")?;
+        lua!(f, "--todo")?;
+        write!(f, "\n\n")?;
         write!(f, "---")?;
         Ok(())
     }
