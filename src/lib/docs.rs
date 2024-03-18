@@ -5,13 +5,13 @@ use std::{fmt, fs, io, path};
 
 const INDENT: &str = "    ";
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Docs {
     pub globals: Class,
     pub math: Class,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Class {
     pub name: String,
     pub description: String,
@@ -19,7 +19,7 @@ pub struct Class {
     pub fields: Vec<Field>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Method {
     pub aliases: Vec<String>,
     pub description: String,
@@ -29,16 +29,16 @@ pub struct Method {
     pub r#static: bool,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Overload(Vec<Parameter>);
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Parameter {
     pub name: String,
     pub r#type: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 pub struct Field {
     pub name: String,
     pub description: String,
@@ -85,6 +85,24 @@ impl Class {
             })
             .flatten()
             .collect::<Vec<_>>()
+    }
+
+    pub fn swap_setters_and_getters(&mut self) {
+        let mut i = 0;
+        while i + 1 < self.methods.len() {
+            let curr_name = &self.methods[i].name;
+            let next_name = &self.methods[i + 1].name;
+            let curr_prefix = &curr_name[..3];
+            let next_prefix = &next_name[..3];
+            if (curr_prefix != "set" || curr_prefix != "get")
+                && (next_prefix != "set" || next_prefix != "get")
+            {
+                if curr_name[3..] == next_name[3..] {
+                    self.methods.swap(i, i + 1);
+                }
+            }
+            i += 1;
+        }
     }
 }
 

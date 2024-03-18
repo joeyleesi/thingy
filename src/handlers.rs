@@ -8,6 +8,8 @@ pub fn generate(docs: Docs, page: String) {
             return;
         }
     };
+    let mut page = page.clone();
+    page.swap_setters_and_getters();
     println!("{page}");
 }
 
