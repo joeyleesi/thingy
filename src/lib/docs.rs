@@ -88,21 +88,22 @@ impl Class {
     }
 
     pub fn swap_setters_and_getters(&mut self) {
-        let mut i = 0;
-        while i + 1 < self.methods.len() {
-            let curr_name = &self.methods[i].name;
-            let next_name = &self.methods[i + 1].name;
-            let curr_prefix = &curr_name[..3];
-            let next_prefix = &next_name[..3];
-            if (curr_prefix != "set" || curr_prefix != "get")
-                && (next_prefix != "set" || next_prefix != "get")
-            {
-                if curr_name[3..] == next_name[3..] {
-                    self.methods.swap(i, i + 1);
-                }
+        self.methods.sort_by(|a, b| {
+            let a_name = if a.name.starts_with("set") || a.name.starts_with("get") {
+                &a.name[3..]
+            } else {
+                &a.name
+            };
+            let b_name = if b.name.starts_with("set") || b.name.starts_with("get") {
+                &b.name[3..]
+            } else {
+                &b.name
+            };
+            if a_name == b_name {
+                return b.name.cmp(&a.name);
             }
-            i += 1;
-        }
+            a_name.cmp(b_name)
+        });
     }
 }
 
