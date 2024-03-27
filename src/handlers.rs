@@ -10,6 +10,7 @@ pub fn generate(docs: Docs, page: String) {
     };
     let mut page = page.clone();
     page.swap_setters_and_getters();
+    page.add_parent_to_methods();
     println!("{page}");
 }
 

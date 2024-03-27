@@ -27,6 +27,7 @@ pub struct Method {
     pub parameters: Vec<Overload>,
     pub returns: Vec<String>,
     pub r#static: bool,
+    pub parent: Option<String>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -104,6 +105,12 @@ impl Class {
             }
             a_name.cmp(b_name)
         });
+    }
+
+    pub fn add_parent_to_methods(&mut self) {
+        for method in &mut self.methods {
+            method.parent = Some(self.name.clone());
+        }
     }
 }
 
@@ -196,7 +203,15 @@ impl fmt::Display for Method {
                         self.returns[i],
                         type_to_slug(&self.returns[i])
                     ),
-                    "-".to_string(),
+                    if let Some(parent) = &self.parent {
+                        if &self.returns[i] == parent {
+                            "Returns self for chaining".to_string()
+                        } else {
+                            "-".to_string()
+                        }
+                    } else {
+                        "-".to_string()
+                    },
                 ]],
             );
             write!(f, "{}", returns)?;
